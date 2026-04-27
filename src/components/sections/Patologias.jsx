@@ -129,7 +129,7 @@ function ACV({ onOpenModal }) {
           {testItems.map(item => (
             <div
               key={item.n}
-              className={`flex gap-1.5 items-start text-[12px] p-2 bg-[#fafaf8] border border-border rounded${item.n === 13 ? ' sm:col-span-2' : ''}`}
+              className={`flex gap-1.5 items-start text-[12px] p-2 bg-surface border border-border rounded${item.n === 13 ? ' sm:col-span-2' : ''}`}
             >
               <span className="bg-accent text-white rounded text-[10px] font-bold px-1.5 py-0.5 shrink-0">{item.n}</span>
               {item.t}
@@ -320,19 +320,19 @@ function Cognitivo({ onOpenModal }) {
       <div className="informe-label mb-3">Algoritmo ENPS mínimo de rastreo</div>
       <div className="overflow-x-auto mb-4">
       <div className="flex flex-col items-center gap-0 font-mono text-[12px] min-w-[560px]">
-        <div className="bg-dark text-white rounded px-5 py-2 font-bold text-[13px]">MMSE</div>
+        <div className="bg-navy text-white rounded px-5 py-2 font-bold text-[13px]">MMSE</div>
         <div className="flex gap-10 sm:gap-20 items-start mt-1">
           {/* ≥24 branch */}
           <div className="flex flex-col items-center">
             <div className="text-[10px] text-green font-bold mb-0.5">≥ 24</div>
             <div className="text-gray text-xl">↓</div>
-            <div className="bg-dark text-white rounded px-4 py-1.5 font-bold text-[12px] whitespace-nowrap">FSV (Fluencia verbal semántica)</div>
+            <div className="bg-navy text-white rounded px-4 py-1.5 font-bold text-[12px] whitespace-nowrap">FSV (Fluencia verbal semántica)</div>
             <div className="flex gap-6 sm:gap-12 items-start mt-1">
               {/* ≥14 branch */}
               <div className="flex flex-col items-center">
                 <div className="text-[10px] text-green font-bold mb-0.5">≥ 14</div>
                 <div className="text-gray text-xl">↓</div>
-                <div className="bg-dark text-white rounded px-3 py-1.5 font-bold text-[12px] whitespace-nowrap">Test del Reloj (Freedman)</div>
+                <div className="bg-navy text-white rounded px-3 py-1.5 font-bold text-[12px] whitespace-nowrap">Test del Reloj (Freedman)</div>
                 <div className="flex gap-5 sm:gap-8 items-start mt-1">
                   <div className="flex flex-col items-center">
                     <div className="text-[10px] text-green font-bold mb-0.5">≥ 5</div>
@@ -377,7 +377,7 @@ function Cognitivo({ onOpenModal }) {
       </div>
 
       {/* Impacto del cese */}
-      <div className="bg-[#f8f6f0] border border-border rounded-lg p-3.5 mt-1">
+      <div className="bg-surface border border-border rounded-lg p-3.5 mt-1">
         <div className="informe-label mb-2 text-yellow">⚠️ Impacto del cese de la conducción y estrategias de mitigación</div>
         <p className="text-[12.5px] text-dark mb-2.5">La suspensión de la conducción en el adulto mayor se asocia a mayor riesgo de <strong>síntomas depresivos, aislamiento social, reducción de la participación comunitaria y pérdida de autonomía</strong>.</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[12px]">
@@ -386,7 +386,7 @@ function Cognitivo({ onOpenModal }) {
             { icon: '🚌', title: 'Alternativas de movilidad', desc: 'Transporte público accesible · servicios comunitarios · apoyo familiar · transporte compartido.' },
             { icon: '👨‍👩‍👧', title: 'Abordaje familiar', desc: 'Involucrar al paciente en la decisión · enfatizar seguridad propia y de terceros · no retirar las llaves sin diálogo previo.' },
           ].map(s => (
-            <div key={s.title} className="bg-white rounded p-2.5 border border-border">
+            <div key={s.title} className="bg-surface rounded p-2.5 border border-border">
               <div className="font-bold text-accent mb-1">{s.icon} {s.title}</div>
               {s.desc}
             </div>

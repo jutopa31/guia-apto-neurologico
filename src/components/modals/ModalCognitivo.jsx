@@ -142,7 +142,7 @@ Firma del familiar/informante: _________________________________`
       className="fixed inset-0 bg-black/70 z-50 flex items-start justify-center p-2 sm:p-4 overflow-y-auto"
       onClick={e => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-white rounded-xl w-full max-w-3xl shadow-2xl my-auto">
+      <div className="bg-card rounded-xl w-full max-w-3xl shadow-2xl my-auto" style={{ border: '1px solid #1c3050' }}>
         <div className="text-white px-4 sm:px-6 py-4 flex justify-between items-center" style={{ background: '#5a4010', borderBottom: '3px solid #b8860b' }}>
           <div>
             <h2 className="text-[16px] font-bold">📝 Informe Neurológico — Trastornos Cognitivos</h2>
@@ -349,8 +349,8 @@ Firma del familiar/informante: _________________________________`
           {report && <pre className="preview-area">{report}</pre>}
         </div>
 
-        <div className="px-4 sm:px-6 py-4 border-t border-border flex gap-2.5 justify-end bg-[#fafaf8] flex-wrap">
-          <button onClick={onClose} className="px-5 py-2 rounded bg-[#e8e4dc] text-dark text-[13px] font-semibold hover:opacity-85 transition">Cancelar</button>
+        <div className="px-4 sm:px-6 py-4 border-t border-border flex gap-2.5 justify-end bg-navy flex-wrap">
+          <button onClick={onClose} className="px-5 py-2 rounded bg-surface text-dark text-[13px] font-semibold hover:opacity-85 transition" style={{ border: '1px solid #1c3050' }}>Cancelar</button>
           <button onClick={generar} className="px-5 py-2 rounded text-[13px] font-semibold hover:opacity-85 transition" style={{ background: '#b8860b', color: '#fff' }}>📄 Generar informe</button>
           {report && (
             <button onClick={copiar} className="px-5 py-2 rounded bg-red text-white text-[13px] font-semibold hover:opacity-85 transition">
