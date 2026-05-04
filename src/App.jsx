@@ -2,10 +2,12 @@ import { useState } from 'react'
 import TabBar from './components/TabBar'
 import AcvTab from './tabs/AcvTab'
 import CognitivoTab from './tabs/CognitivoTab'
+import InformeTab from './tabs/InformeTab'
 
 const TABS = [
-  { id: 'acv',       label: 'ACV Isquémico'       },
-  { id: 'cognitivo', label: 'Deterioro Cognitivo'  },
+  { id: 'acv',       label: 'ACV Isquémico'      },
+  { id: 'cognitivo', label: 'Deterioro Cognitivo' },
+  { id: 'informe',   label: 'Evaluación e Informe' },
 ]
 
 export default function App() {
@@ -28,6 +30,7 @@ export default function App() {
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-6">
         {active === 'acv'       && <AcvTab />}
         {active === 'cognitivo' && <CognitivoTab />}
+        {active === 'informe'   && <InformeTab />}
       </main>
 
       <footer className="text-center text-xs text-gray-400 py-4 border-t border-gray-200 flex-shrink-0">
