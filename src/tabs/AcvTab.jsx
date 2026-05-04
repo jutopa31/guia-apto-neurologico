@@ -2,11 +2,7 @@ import SectionHeader from '../components/SectionHeader'
 import SlideCard from '../components/SlideCard'
 import AlertBox from '../components/AlertBox'
 import ClinicalTable from '../components/ClinicalTable'
-import { tiemposMinimos, dominios, contraindicacionesAbsolutas, derivaciones, aptitudes } from '../content/acv'
-import { Clock, Eye, Brain, MessageSquare, AlertCircle } from 'lucide-react'
-
-const dominioIcons = { motor: Clock, visual: Eye, cognitivo: Brain, lenguaje: MessageSquare, negligencia: AlertCircle }
-const dominioAccent = { blue: 'blue', orange: 'orange', red: 'red', gray: 'gray' }
+import { tablaAcv, notasTablaAcv, areasFuncionales, criterioAptitud, derivaciones, aptitudes } from '../content/acv'
 
 export default function AcvTab() {
   return (
@@ -20,68 +16,50 @@ export default function AcvTab() {
       <AlertBox
         type="blue"
         title="Principio clave"
-        text="El neurólogo evalúa el impacto funcional y aporta una recomendación orientativa. La decisión administrativa final sobre aptitud para conducir corresponde al organismo emisor de la licencia (ANSV / DHAC / municipio)."
+        text="El neurólogo evalúa el impacto funcional y emite una recomendación orientativa. La decisión administrativa final sobre aptitud para conducir corresponde al organismo emisor de la licencia (ANSV / DHAC / municipio)."
       />
 
-      {/* Tiempos mínimos */}
-      <SlideCard accent="red" title="Tiempos mínimos post-evento">
-        <p className="text-sm text-gray-600 mb-4">
-          El tiempo transcurrido desde el evento es el factor inicial más importante. Ningún paciente debe ser evaluado
-          para aptitud antes de cumplir el período mínimo correspondiente.
-        </p>
-        <ClinicalTable headers={tiemposMinimos.headers} rows={tiemposMinimos.rows} />
-        <AlertBox
-          type="orange"
-          title="Período mínimo"
-          text="Durante el período mínimo post-evento el paciente es considerado NO APTO con independencia del examen neurológico. Documentar fecha del evento en el informe."
-        />
+      {/* Tabla 7 — Tiempos mínimos y aptitud */}
+      <SlideCard accent="red" title="Tabla 7 — Tiempos mínimos y aptitud post-evento">
+        <ClinicalTable headers={tablaAcv.headers} rows={tablaAcv.rows} />
+        <ul className="mt-3 space-y-1">
+          {notasTablaAcv.map((n, i) => (
+            <li key={i} className="text-xs text-gray-500 flex gap-2">
+              <span className="flex-shrink-0">•</span>
+              {n}
+            </li>
+          ))}
+        </ul>
       </SlideCard>
 
-      {/* Dominios neurológicos */}
+      {/* Áreas funcionales */}
       <div>
-        <h2 className="font-display text-xl text-gray-800 mb-3 ml-1">Evaluación por dominios neurológicos</h2>
+        <h2 className="font-display text-xl text-gray-800 mb-3 ml-1">Evaluación por áreas funcionales</h2>
+        <p className="text-sm text-gray-600 mb-4 ml-1">
+          La aptitud queda supeditada a la ausencia de déficits significativos en cada una de las siguientes áreas.
+          Ante cualquier duda clínica, complementar con test de manejo y/o evaluación funcional específica.
+        </p>
         <div className="space-y-3">
-          {dominios.map(dom => {
-            const Icon = dominioIcons[dom.id] ?? Brain
-            const accent = dominioAccent[dom.color] ?? 'gray'
-            return (
-              <SlideCard key={dom.id} accent={accent}>
-                <div className="flex items-start gap-3">
-                  <div className={`flex-shrink-0 p-2 rounded-lg bg-${dom.color}-50`}>
-                    <Icon size={18} className={`text-${dom.color}-600`} />
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-display text-base text-gray-900 mb-2">{dom.titulo}</h3>
-                    <ul className="space-y-1.5">
-                      {dom.items.map((item, i) => (
-                        <li key={i} className="text-sm text-gray-700 flex gap-2">
-                          <span className="mt-1.5 w-1 h-1 rounded-full bg-gray-400 flex-shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                    {dom.alerta && (
-                      <AlertBox type="orange" text={dom.alerta} />
-                    )}
-                  </div>
+          {areasFuncionales.map(area => (
+            <SlideCard key={area.num} accent="blue">
+              <div className="flex items-start gap-3">
+                <div className="flex-shrink-0 w-7 h-7 rounded-full bg-blue-100 text-blue-700 text-sm font-bold flex items-center justify-center mt-0.5">
+                  {area.num}
                 </div>
-              </SlideCard>
-            )
-          })}
+                <div className="flex-1">
+                  <h3 className="font-semibold text-gray-900 mb-1">{area.area}</h3>
+                  <p className="text-sm text-gray-600">{area.detalle}</p>
+                </div>
+              </div>
+            </SlideCard>
+          ))}
         </div>
       </div>
 
-      {/* Contraindicaciones absolutas */}
-      <SlideCard accent="red" title="Contraindicaciones absolutas para conducción">
-        <AlertBox
-          type="red"
-          title="No apto en forma absoluta"
-          items={contraindicacionesAbsolutas}
-        />
-        <p className="text-xs text-gray-500 mt-3">
-          * La epilepsia post-ACV tiene criterios propios según tiempo libre de crisis y clase de licencia. Ver protocolo epilepsia.
-        </p>
-      </SlideCard>
+      {/* Criterio de aptitud */}
+      <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+        <p className="text-sm text-blue-800 leading-relaxed">{criterioAptitud}</p>
+      </div>
 
       {/* Derivaciones */}
       <SlideCard accent="blue" title="Estudios y derivaciones recomendadas">
@@ -89,22 +67,21 @@ export default function AcvTab() {
         <AlertBox
           type="blue"
           title="Test de manejo"
-          text="Indicar al paciente presentarse ante la autoridad de licencias de su jurisdicción. El test en vía pública lo evalúa el ente emisor — el neurólogo deriva, no administra el test."
+          text="El test en vía pública lo administra el ente emisor de licencias — el neurólogo deriva, no lo administra. Indicar al paciente presentarse ante la autoridad de licencias de su jurisdicción (DHAC / municipio)."
         />
       </SlideCard>
 
-      {/* Conclusión */}
+      {/* Opciones de conclusión */}
       <SlideCard accent="green" title="Opciones de conclusión en el informe">
         <ClinicalTable headers={aptitudes.headers} rows={aptitudes.rows} />
-        <div className="mt-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="mt-4 p-3 bg-gray-50 rounded-lg border border-gray-200">
           <p className="text-xs text-gray-500 leading-relaxed">
             <span className="font-semibold text-gray-700">Vigencia sugerida: </span>
-            APTO → 1 año habitual · CONDICIONAL → hasta resolución del estudio pendiente ·
+            APTO → 1 año (primeros 5 años post-evento) · CONDICIONAL → hasta resolución del estudio pendiente ·
             NO APTO TEMPORARIO → fecha de reevaluación explícita en el informe.
           </p>
         </div>
       </SlideCard>
-
     </div>
   )
 }

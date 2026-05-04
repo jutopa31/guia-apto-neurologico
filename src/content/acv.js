@@ -1,105 +1,93 @@
-export const tiemposMinimos = {
-  headers: ['Tipo de evento', 'Clase A–B (particular)', 'Clase C–D–E–G (profesional)'],
+// Fuente: Tabla 7 — Alet MJ et al. Protocolos de apto neurológico para la conducción vehicular.
+// Neurología Argentina 2026. DOI 10.1016/j.neuarg.2026.100732
+
+export const tablaAcv = {
+  headers: ['Diagnóstico', 'Clases A–B', 'Clases C–D–E–G', 'Libre de episodios', 'Vigencia', 'Estudios'],
   rows: [
-    ['AIT sin secuelas', '4 semanas', '3 meses'],
-    ['ACV isquémico sin secuelas funcionales', '4 semanas', '3 meses'],
-    ['ACV isquémico con secuelas estables', '3 meses', '6 meses'],
-    ['ACV / AIT recurrente', '6 meses desde último episodio', '12 meses'],
-    ['ACV hemorrágico / HSA', '6 meses', '12 meses'],
+    [
+      'ACV isquémico / AIT',
+      'Apto si no posee inaptitud por secuelas de áreas funcionales',
+      'Apto si no posee inaptitud por secuelas de áreas funcionales',
+      '≥ 6 meses sin ACV ni AIT',
+      '1 año (primeros 5 años post-evento)',
+      'Test de manejo (salvo sin secuelas documentadas)',
+    ],
+    [
+      'ACV hemorrágico / HIP / HSA',
+      'Apto si no posee inaptitud por secuelas de áreas funcionales',
+      'Apto si no posee inaptitud por secuelas de áreas funcionales',
+      '≥ 12 meses sin episodios',
+      '1 año (primeros 5 años post-evento)',
+      'Test de manejo (salvo sin secuelas documentadas)',
+    ],
   ],
 }
 
-export const dominios = [
+export const notasTablaAcv = [
+  'Certificado emitido por neurólogo tratante en todos los casos.',
+  'Luego de los primeros 5 años post-evento: se aplica el tiempo de renovación habitual de la licencia.',
+  'La aptitud queda supeditada a la ausencia de déficits en áreas funcionales consignadas abajo.',
+  'El AIT se encuadra bajo los mismos criterios que el ACV isquémico.',
+]
+
+export const areasFuncionales = [
   {
-    id: 'motor',
-    color: 'blue',
-    titulo: 'Motor y coordinación',
-    items: [
-      'Fuerza MRC ≥ 4/5 en MMSS y MMII — necesaria para operar el volante, frenos y acelerador',
-      'Destreza manual: capacidad de girar volante rápidamente',
-      'Coordinación: sin dismetría que comprometa maniobras finas',
-      'Sin temblor de intención relevante para la conducción',
-    ],
-    alerta: null,
+    num: '1',
+    area: 'Compromiso motriz',
+    detalle: 'Evaluar fuerza (escala MRC) en MMSS y MMII, tono, destreza manual y reflejos. Registrar asimetrías. Clonus aquíleo persistente puede ser limitación funcional relevante.',
   },
   {
-    id: 'visual',
-    color: 'orange',
-    titulo: 'Visión y oculomotricidad',
-    items: [
-      'Agudeza visual ≥ 0,5 en el ojo de mayor visión (exigencia legal básica)',
-      'Campo visual: sin hemianopsia homónima ni cuadrantanopsia superior',
-      'Sin diplopía no corregida',
-      'Motilidad ocular: sin oftalmoplejía que afecte visión binocular dinámica',
-    ],
-    alerta: 'La hemianopsia homónima es contraindicación absoluta para conducir — incluso con compensación subjetiva.',
+    num: '2',
+    area: 'Alteración de la coordinación',
+    detalle: 'Ataxia, dismetría o temblor de intención que interfiera con el control del vehículo. Pruebas: dedo-nariz, talón-rodilla.',
   },
   {
-    id: 'cognitivo',
-    color: 'red',
-    titulo: 'Cognición — dominios críticos',
-    items: [
-      'Atención sostenida y dividida: evaluar con TMT-A y TMT-B',
-      'Funciones ejecutivas: planificación, flexibilidad cognitiva (TMT-B, fluencia)',
-      'Velocidad de procesamiento: test del reloj (Freedman ≥ 5/7)',
-      'Visuoespacial: capacidad de estimar distancias y orientarse en el espacio',
-      'MoCA ≥ 24/30 como referencia orientativa (no es criterio excluyente aislado)',
-    ],
-    alerta: null,
+    num: '3',
+    area: 'Alteración sensorial — visión y audición',
+    detalle: 'Evaluar motilidad ocular y palpebral, campo visual por confrontación, visión binocular. Déficit campimétricamente relevante (hemianopsia, cuadrantanopsia): derivar a oftalmología.',
   },
   {
-    id: 'lenguaje',
-    color: 'gray',
-    titulo: 'Lenguaje y comunicación',
-    items: [
-      'Afasia global o de Wernicke: contraindicación — compromete comprensión de señales',
-      'Afasia de Broca leve: evaluar caso a caso — puede conservar comprensión',
-      'Disartria aislada sin déficit de comprensión: no contraindica por sí misma',
-    ],
-    alerta: null,
+    num: '4',
+    area: 'Alteración del lenguaje',
+    detalle: 'Afasia que comprometa comprensión de señales de tránsito. Afasia de Wernicke o global: contraindica por compromiso de comprensión. Broca leve: evaluar caso a caso.',
   },
   {
-    id: 'negligencia',
-    color: 'red',
-    titulo: 'Negligencia / hemi-inatención',
-    items: [
-      'Exploración: line bisection, figure cancellation, descripción de escena',
-      'Hemi-inatención izquierda leve: evaluar con test de manejo en simulador',
-      'Negligencia visuoespacial franca: contraindicación absoluta para conducir',
-    ],
-    alerta: 'La negligencia es una de las secuelas post-ACV con mayor impacto en seguridad vial, frecuentemente subestimada en consulta.',
+    num: '5',
+    area: 'Compromiso cognitivo',
+    detalle: 'Atención, funciones ejecutivas, habilidades visuoperceptivas y visuoespaciales. Ante déficit o duda: derivar a evaluación neuropsicológica completa.',
+  },
+  {
+    num: '6',
+    area: 'Epilepsia post-ACV',
+    detalle: 'Aplicar criterios específicos de epilepsia y conducción — Tabla 5 del protocolo SNA 2026.',
+  },
+  {
+    num: '7',
+    area: 'Dolor crónico',
+    detalle: 'Dolor con impacto funcional que limite la atención o el control del vehículo. Considerar medicación analgésica con potencial sedante (opioides, anticonvulsivantes).',
   },
 ]
 
-export const contraindicacionesAbsolutas = [
-  'Epilepsia post-ACV sin período libre de crisis (ver criterios por clase)',
-  'Hemianopsia homónima o cuadrantanopsia superior sin adaptación compensatoria documentada',
-  'Negligencia visuoespacial franca',
-  'Déficit cognitivo moderado a severo (MoCA < 18, CDR ≥ 2)',
-  'Afasia global o de comprensión severa',
-  'Hemiparesia que impide operar volante y pedales de forma segura',
-  'Fase aguda o subaguda del ACV (< 4 semanas)',
-]
+export const criterioAptitud = 'Más allá de los períodos mínimos, la decisión final depende de que no existan déficits significativos — motores, sensitivos, sensoriales/visuales, cognitivos/ejecutivos o de coordinación — que interfieran con el control seguro del vehículo. Cuando existe duda, puede complementarse con test de manejo y evaluación funcional específica según disponibilidad local. (Fuente: Protocolo SNA 2026)'
 
 export const derivaciones = {
   headers: ['Derivación', 'Indicación', 'Quién solicita'],
   rows: [
-    ['Test de manejo en vía pública', 'ACV con secuelas motoras o cognitivas leves, aptitud condicional', 'Neurólogo → DHAC/municipio'],
-    ['Evaluación neuropsicológica', 'Déficit cognitivo post-ACV, dudas en MoCA o TMT', 'Neurólogo'],
-    ['Simulador de conducción', 'Secuelas moderadas, evaluación objetiva pre-test', 'Neurólogo / T. Ocupacional'],
-    ['Oftalmología (campo visual)', 'Sospecha de déficit de campo, ACV occipital', 'Neurólogo'],
-    ['Terapia ocupacional', 'Secuelas motoras que puedan compensarse con adaptaciones', 'Neurólogo'],
-    ['SDSA (Stroke Driving Screening)', 'Evaluación estructurada de aptitud para conducir', 'Neuropsicólogo / T. Ocupacional'],
+    ['Test de manejo en vía pública', 'ACV con secuelas, aptitud incierta, dudas clínicas', 'Neurólogo → autoridad de licencias (DHAC/municipio)'],
+    ['Evaluación neuropsicológica', 'Déficit cognitivo post-ACV, MoCA o TMT alterados', 'Neurólogo'],
+    ['Oftalmología (campo visual)', 'Sospecha de hemianopsia, ACV occipital', 'Neurólogo'],
+    ['Simulador de conducción', 'Secuelas moderadas, alternativa cuando test en vía pública no está disponible', 'Neurólogo / T. Ocupacional'],
+    ['SDSA (Stroke Driving Screening Assessment)', 'Cribado validado post-ACV: Dot Cancellation, Square Matrices, Compass, Road Sign Recognition', 'Neuropsicólogo / T. Ocupacional'],
+    ['Terapia ocupacional', 'Evaluación de adaptaciones vehiculares ante déficit motor parcial', 'Neurólogo'],
   ],
 }
 
 export const aptitudes = {
-  headers: ['Impresión clínica', 'Condición'],
+  headers: ['Conclusión', 'Condición'],
   rows: [
-    ['APTO — clase A–B', 'Sin déficits neurológicos que comprometan conducción · vigencia 1 año'],
-    ['APTO — todas las clases', 'Igual condición, profesional certificado por neurólogo'],
-    ['CONDICIONAL', 'Supeditado a test de manejo y/o neuropsicología · hasta entonces: no conducir'],
-    ['NO APTO TEMPORARIO', 'Dentro de período mínimo post-evento · reevaluación programada'],
-    ['NO APTO', 'Déficits que contraindican conducción segura en el momento actual'],
+    ['APTO', 'Sin déficits en áreas funcionales · libre de episodios ≥ 6 m (isquémico) / ≥ 12 m (hemorrágico) · vigencia 1 año'],
+    ['APTITUD CONDICIONAL', 'Supeditada a test de manejo y/o neuropsicología · hasta definición: no conducir'],
+    ['NO APTO TEMPORARIO', 'Dentro del período mínimo libre de episodios · reevaluación con fecha explícita'],
+    ['NO APTO', 'Déficits en áreas funcionales que contraindican conducción en el momento actual'],
   ],
 }

@@ -2,10 +2,16 @@ import SectionHeader from '../components/SectionHeader'
 import SlideCard from '../components/SlideCard'
 import AlertBox from '../components/AlertBox'
 import ClinicalTable from '../components/ClinicalTable'
-import { cdrConduccion, enpsBateria, alarmasVolante, diagnosticosEspeciales, abordajeFamiliar } from '../content/cognitivo'
-import { Users, TriangleAlert } from 'lucide-react'
-
-const enpsColor = { blue: { bg: 'bg-blue-50', border: 'border-blue-200', label: 'text-blue-700', badge: 'bg-blue-100 text-blue-800' }, green: { bg: 'bg-green-50', border: 'border-green-200', label: 'text-green-700', badge: 'bg-green-100 text-green-800' }, orange: { bg: 'bg-orange-50', border: 'border-orange-200', label: 'text-orange-700', badge: 'bg-orange-100 text-orange-800' }, red: { bg: 'bg-red-50', border: 'border-red-200', label: 'text-red-700', badge: 'bg-red-100 text-red-800' } }
+import {
+  tablaCognitivo,
+  notasTabla,
+  algoritmosEnps,
+  enpsCuando,
+  algoritmoDemencia,
+  alarmasVolante,
+  abordajeFamiliar,
+} from '../content/cognitivo'
+import { Users, TriangleAlert, CheckCircle2, XCircle, ArrowRight } from 'lucide-react'
 
 export default function CognitivoTab() {
   return (
@@ -19,75 +25,128 @@ export default function CognitivoTab() {
       <AlertBox
         type="blue"
         title="Principio clave"
-        text="El deterioro cognitivo no implica inaptitud automática. La decisión se basa en la severidad funcional (CDR), el rendimiento en la batería ENPS y la presencia de señales de alarma al volante. Siempre involucrar al familiar o informante."
+        text="El deterioro cognitivo no implica inaptitud automática. La decisión se basa en el diagnóstico, la severidad funcional, el rendimiento en la batería ENPS y la presencia de señales de alarma al volante. Siempre involucrar al familiar o informante."
       />
 
-      {/* CDR y conducción */}
-      <SlideCard accent="amber" title="CDR y conducción — referencia rápida">
-        <p className="text-sm text-gray-600 mb-4">
-          El CDR (Clinical Dementia Rating) es la escala de referencia para la toma de decisiones. Un CDR ≥ 2 implica
-          inaptitud absoluta para todas las clases de licencia.
-        </p>
-        <ClinicalTable headers={cdrConduccion.headers} rows={cdrConduccion.rows} />
+      {/* Tabla 10 — Aptitud por diagnóstico */}
+      <SlideCard accent="amber" title="Tabla 10 — Aptitud por diagnóstico">
+        <ClinicalTable headers={tablaCognitivo.headers} rows={tablaCognitivo.rows} />
+        <ul className="mt-3 space-y-1">
+          {notasTabla.map((n, i) => (
+            <li key={i} className="text-xs text-gray-500 flex gap-2">
+              <span className="flex-shrink-0">•</span>
+              {n}
+            </li>
+          ))}
+        </ul>
       </SlideCard>
 
-      {/* Batería ENPS */}
-      <SlideCard accent="blue" title="Batería ENPS de rastreo cognitivo">
-        <p className="text-sm text-gray-600 mb-4">
-          La batería ENPS evalúa los dominios cognitivos más relevantes para la conducción. Los valores de corte son
-          orientativos — siempre interpretar en contexto clínico y nivel educativo del paciente.
-        </p>
+      {/* Algoritmo demencia — Figura 4 */}
+      <SlideCard accent="orange" title="Figura 4 — Algoritmo de decisión para demencia">
         <div className="space-y-2">
-          {enpsBateria.map(test => {
-            const c = enpsColor[test.color] ?? enpsColor.blue
-            return (
-              <div key={test.nombre} className={`rounded-lg border ${c.bg} ${c.border} p-3`}>
-                <div className="flex items-start justify-between gap-3 flex-wrap">
-                  <div className="flex items-center gap-2">
-                    <span className={`text-sm font-semibold ${c.label}`}>{test.nombre}</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${c.badge}`}>corte: {test.corte}</span>
-                  </div>
-                  <span className="text-xs text-gray-500">{test.rango}</span>
-                </div>
-                <p className="text-xs text-gray-600 mt-1.5">{test.uso}</p>
+          {algoritmoDemencia.map((paso, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-orange-100 text-orange-700 text-xs font-bold flex items-center justify-center mt-0.5">
+                {paso.paso}
               </div>
-            )
-          })}
+              <p className="text-sm text-gray-700 pt-0.5">{paso.texto}</p>
+            </div>
+          ))}
         </div>
         <AlertBox
           type="red"
-          title="TMT-B — el test más relevante"
-          text="El Trail Making Test B evalúa atención dividida y flexibilidad cognitiva, habilidades directamente requeridas durante la conducción. Un TMT-B > 3 minutos o incompleto es señal de alarma significativa."
+          title="Discontinuar conducción de inmediato"
+          text="CDR > 1 o MMSE < 24 → inaptitud sin necesidad de test adicional. El familiar o cuidador que refiere riesgos también implica discontinuar la conducción."
         />
       </SlideCard>
 
-      {/* Señales de alarma */}
-      <SlideCard accent="red" title="Señales de alarma al volante">
-        <p className="text-sm text-gray-600 mb-3">
-          Preguntar sistemáticamente al acompañante. La presencia de 2 o más señales graves indica evaluación
-          neuropsicológica completa y test de manejo antes de cualquier recomendación de aptitud.
+      {/* Algoritmo ENPS — Figura 3 */}
+      <SlideCard accent="blue" title="Figura 3 — Algoritmo escalonado ENPS">
+        <p className="text-sm text-gray-600 mb-4">
+          El algoritmo es <strong>secuencial</strong>: solo se avanza al siguiente paso si el anterior es normal. Un resultado
+          alterado en cualquier paso deriva a evaluación neuropsicológica abarcativa.
         </p>
-        <div className="space-y-2">
-          {alarmasVolante.map((a, i) => (
-            <div
-              key={i}
-              className={`rounded-lg border px-4 py-2.5 flex items-center gap-3 ${
-                a.grave
-                  ? 'bg-red-50 border-red-200'
-                  : 'bg-gray-50 border-gray-200'
-              }`}
-            >
-              <TriangleAlert size={14} className={a.grave ? 'text-red-500 flex-shrink-0' : 'text-gray-400 flex-shrink-0'} />
-              <span className={`text-sm ${a.grave ? 'text-red-800 font-medium' : 'text-gray-700'}`}>{a.label}</span>
-              {a.grave && <span className="ml-auto text-xs text-red-600 font-semibold flex-shrink-0">GRAVE</span>}
+
+        {/* Cuándo aplicar ENPS */}
+        <div className="mb-4 rounded-lg border border-blue-200 bg-blue-50 p-3">
+          <p className="text-xs font-semibold text-blue-700 mb-2">Cuándo aplicar la batería ENPS:</p>
+          <ul className="space-y-1">
+            {enpsCuando.map((c, i) => (
+              <li key={i} className="text-xs text-blue-800 flex gap-2">
+                <span className="flex-shrink-0">·</span>
+                {c}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="space-y-3">
+          {algoritmosEnps.map((paso, i) => (
+            <div key={i} className="rounded-lg border border-gray-200 bg-white overflow-hidden">
+              <div className="bg-gray-50 border-b border-gray-200 px-4 py-2 flex items-center gap-2">
+                <span className="w-5 h-5 rounded-full bg-blue-600 text-white text-xs font-bold flex items-center justify-center flex-shrink-0">
+                  {paso.paso}
+                </span>
+                <span className="font-semibold text-sm text-gray-800">{paso.test}</span>
+              </div>
+              <div className="px-4 py-3 space-y-2">
+                <p className="text-xs text-gray-500">{paso.nota}</p>
+                <div className="grid grid-cols-2 gap-2 mt-2">
+                  <div className="rounded-md border border-green-200 bg-green-50 px-3 py-2 flex items-start gap-2">
+                    <CheckCircle2 size={14} className="text-green-600 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs font-semibold text-green-700">{paso.corteOk}</p>
+                      <p className="text-xs text-green-600 flex items-center gap-1">
+                        <ArrowRight size={10} /> {paso.si}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="rounded-md border border-red-200 bg-red-50 px-3 py-2 flex items-start gap-2">
+                    <XCircle size={14} className="text-red-500 flex-shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-xs font-semibold text-red-700">{paso.corteAlerta}</p>
+                      <p className="text-xs text-red-600 flex items-center gap-1">
+                        <ArrowRight size={10} /> {paso.no}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </SlideCard>
 
-      {/* Diagnósticos especiales */}
-      <SlideCard accent="orange" title="Aptitud por diagnóstico — referencia rápida">
-        <ClinicalTable headers={diagnosticosEspeciales.headers} rows={diagnosticosEspeciales.rows} />
+      {/* Tabla 11 — Señales de alarma */}
+      <SlideCard accent="red" title="Tabla 11 — Señales de alarma al volante">
+        <p className="text-sm text-gray-600 mb-3">
+          Preguntar sistemáticamente al familiar o cuidador. La presencia de señales marcadas como graves justifica
+          evaluación neuropsicológica completa y test de manejo antes de cualquier decisión de aptitud.
+        </p>
+        <div className="space-y-1.5">
+          {alarmasVolante.map((a, i) => (
+            <div
+              key={i}
+              className={`rounded-lg border px-4 py-2.5 flex items-start gap-3 ${
+                a.grave ? 'bg-red-50 border-red-200' : 'bg-gray-50 border-gray-200'
+              }`}
+            >
+              <TriangleAlert
+                size={14}
+                className={`flex-shrink-0 mt-0.5 ${a.grave ? 'text-red-500' : 'text-gray-400'}`}
+              />
+              <div className="flex-1 min-w-0">
+                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-0.5">{a.dominio}</p>
+                <p className={`text-sm ${a.grave ? 'text-red-800 font-medium' : 'text-gray-700'}`}>{a.label}</p>
+              </div>
+              {a.grave && (
+                <span className="flex-shrink-0 text-xs text-red-600 font-semibold bg-red-100 px-2 py-0.5 rounded-full">
+                  GRAVE
+                </span>
+              )}
+            </div>
+          ))}
+        </div>
       </SlideCard>
 
       {/* Abordaje familiar */}
@@ -103,7 +162,9 @@ export default function CognitivoTab() {
         <ul className="space-y-2">
           {abordajeFamiliar.map((item, i) => (
             <li key={i} className="flex gap-3 text-sm text-gray-700">
-              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 text-green-700 text-xs font-semibold flex items-center justify-center mt-0.5">{i + 1}</span>
+              <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-100 text-green-700 text-xs font-semibold flex items-center justify-center mt-0.5">
+                {i + 1}
+              </span>
               {item}
             </li>
           ))}
@@ -111,10 +172,9 @@ export default function CognitivoTab() {
         <AlertBox
           type="orange"
           title="Si el paciente se niega a dejar de conducir"
-          text="Consultar con el servicio de ética y/o legal. En algunos marcos normativos el médico tiene obligación de notificar a la autoridad competente. Documentar siempre la consejería y el rechazo en la HC."
+          text="Consultar con el servicio de ética y/o legal. La normativa puede contemplar obligación de notificación a la autoridad competente. Documentar siempre la consejería y el rechazo en la HC con firma del paciente y familiar/informante."
         />
       </SlideCard>
-
     </div>
   )
 }
