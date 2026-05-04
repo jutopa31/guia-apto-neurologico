@@ -3,10 +3,12 @@ import TabBar from './components/TabBar'
 import AcvTab from './tabs/AcvTab'
 import CognitivoTab from './tabs/CognitivoTab'
 import InformeTab from './tabs/InformeTab'
+import FarmacosTab from './tabs/FarmacosTab'
 
 const TABS = [
   { id: 'acv',       label: 'ACV Isquémico'      },
   { id: 'cognitivo', label: 'Deterioro Cognitivo' },
+  { id: 'farmacos',  label: 'Fármacos'            },
   { id: 'informe',   label: 'Evaluación e Informe' },
 ]
 
@@ -30,6 +32,7 @@ export default function App() {
       <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-6">
         {active === 'acv'       && <AcvTab />}
         {active === 'cognitivo' && <CognitivoTab />}
+        {active === 'farmacos'  && <FarmacosTab />}
         {active === 'informe'   && <InformeTab />}
       </main>
 
