@@ -3,11 +3,13 @@ import TabBar from './components/TabBar'
 import AcvTab from './tabs/AcvTab'
 import CognitivoTab from './tabs/CognitivoTab'
 import InformeTab from './tabs/InformeTab'
+import TestsComplementariosTab from './tabs/TestsComplementariosTab'
 
 const TABS = [
-  { id: 'acv',       label: 'ACV Isquémico'      },
-  { id: 'cognitivo', label: 'Deterioro Cognitivo' },
-  { id: 'informe',   label: 'Evaluación e Informe' },
+  { id: 'acv',         label: 'ACV Isquémico'        },
+  { id: 'cognitivo',   label: 'Deterioro Cognitivo'  },
+  { id: 'informe',     label: 'Evaluación e Informe'  },
+  { id: 'tests',       label: 'Tests Complementarios' },
 ]
 
 export default function App() {
@@ -31,6 +33,7 @@ export default function App() {
         {active === 'acv'       && <AcvTab />}
         {active === 'cognitivo' && <CognitivoTab />}
         {active === 'informe'   && <InformeTab />}
+        {active === 'tests'     && <TestsComplementariosTab />}
       </main>
 
       <footer className="text-center text-xs text-gray-400 py-4 border-t border-gray-200 flex-shrink-0">
